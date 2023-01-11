@@ -1,0 +1,137 @@
+
+Body{
+    background-color: rgb(231, 231, 235);
+}
+
+form {
+    max-width: 1000px;
+    margin: 2rem auto;
+    border: 2px black solid;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    background-color: rgb(218, 211, 188);
+    padding: 3rem;
+
+}
+
+/* input[type="file" i] {
+    border: 0;
+    background: #594d9f;
+    padding: .5rem 2rem;
+    border-radius: 5px;
+    color: white;
+    margin: 1rem 0;
+    width: 70px;
+
+} */
+
+
+
+input[type="radio" i] {
+    width: 20px;
+    height: 20px;
+    border: 2px grey solid;
+    border-radius: 10px;
+}
+
+.inline-input {
+    display: block;
+    width: 50px;
+    margin-left: 2rem;
+    height: 30px;
+}
+
+.add{
+    margin-right: 2rem;
+}
+
+label {
+    display: block;
+    padding: .5rem ;
+    width: 140px;
+}
+
+.form-control-pair{
+    display: flex;
+    flex-direction: row;
+}
+input[type="text" i] {
+    display: block;
+    width: 250px;
+    height: 28px;
+    border: 2px grey solid;
+    border-radius: 10px;
+}
+
+.school-d{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+
+}
+
+select {
+    display: block;
+    width: 280px;
+    height: 30px;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+}
+
+.form-inline-row{
+    display: flex;
+    flex-direction: row;
+   flex-wrap: wrap;
+
+}
+
+.Marital{
+    margin-left: 6rem;
+}
+
+.marital-label{
+    margin-left: 4rem;
+}
+
+button{
+    border: 0;
+    background: #594d9f;
+    padding: .5rem 2rem;
+    border-radius: 5px;
+    color: white;
+    margin: 1rem 0;
+    width: auto
+
+}
+
+.first-set{
+    display: flex;
+
+    flex-direction: row;
+}
+
+
+.form-group.success input {
+    border-color: #09c372;
+}
+
+.form-group.error input {
+    border-color: #ff3860;
+}
+
+.form-group .error {
+    color: #ff3860;
+    margin-top: 7px;
+    font-size: 11px;
+    height: 13px;
+}
+
+.header-name{
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
