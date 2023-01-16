@@ -1,11 +1,14 @@
-
 import './App.css';
-import Newform from './components/Newform';
+import User from './userProfile';
+import LoginButton from './components/loginButton';
+import LogoutButton from './components/logoutButton';
 
 function App() {
   return (
     <div className="App">
-      <Newform />
+      <LoginButton />
+      <LogoutButton />
+      <User />
     </div>
   );
 }

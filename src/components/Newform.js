@@ -1,10 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CSVLink} from 'react-csv';
 
 import './style.css';
 function Form() {
 
-    
+// This fetches data from the country REST api that will be mapped in the country select input
+
+    useEffect(() => {
+        fetch("https://restcountries.com/v2/all")
+        .then((response) => response.json())
+        .then((data) => {setCountries(data)})
+    }, []);
+
+
+    const [countries, setCountries] = useState([]);
+
+    // Data from the form is entirely stored in the formData Object using useState 
 
     const [formData, setFormData] = useState({
         Title: '',
@@ -26,6 +37,17 @@ function Form() {
 
     })
 
+// This function handles data entry and primarily selection for the select input forms
+
+    const onSelectHandler = (e) => {
+        setFormData(() => ({
+            ...formData,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+// This function handles data entry and primarily text changes 
+
     const onChangeHandler = (e) => {
         setFormData(() => ({
             ...formData,
@@ -33,6 +55,8 @@ function Form() {
         }))
         
     }
+
+    // This function handles form data entry in the input image form control
 
     const onImageChange = (e) => {
         setFormData(() => (
@@ -43,6 +67,7 @@ function Form() {
         ))
     }
 
+     // This function handles form data entry in the input file form control
     const onFileChange = (e) => {
         setFormData(() => (
             {
@@ -55,8 +80,7 @@ function Form() {
 
 const arrData = Object.entries(formData);
       
-
-
+    // These functions target the school form inputs for the school form, this maps and updates the form state after the submit button is clicked 
 
     const [schoolValues, setschoolValues] = useState([{ schoolname: "", startdate : "", enddate: ""}])
 
@@ -91,6 +115,10 @@ const arrData = Object.entries(formData);
 
     }
 
+    const current = new Date();
+  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
+    // This is the CSV file header for the state form 
 
     const headers = [
         {label: 'Title', key: 'Title'},
@@ -111,11 +139,12 @@ const arrData = Object.entries(formData);
 
 const csvLink = {
     headers: headers,
-    filename: 'Profile.csv',
+    filename: formData.Firstname+ ' on ' + new Date(),
     data: arrData,
 
 }
 
+// These functions validate the form, primarily targeting the firstname and surname form inputs
 
 const firstname = document.getElementById('firstname');
 const surname = document.getElementById('surname');
@@ -166,35 +195,27 @@ const validateInputs = () => {
 
 
 
-
-
-
-
 return (
 
 <div>
 <form>
-
+    <div className="header-div">
     <h1 className='header-name'>Data Form</h1>
-<div className="form-group Title">
-    <label htmlFor="title" className="form-label">Title </label>
-       <div className="form-control-pair">
-       <div>
-            <input type="radio" name="Title" value="Mr." onChange={onChangeHandler}/>
-            <label htmlFor="Mr.">Mr.</label>
-        </div>
-        <div>
-            <input type="radio" name="Title" value="Mrs." onChange={onChangeHandler}/>
-            <label htmlFor="Mrs.">Mrs.</label>
-        </div>
-       </div>
     </div>
-    <div className="first-set">
+   
+<div className="form-group Title">
+    <label htmlFor="title" className="form-label">Title</label>
+        <select name="Title" onClick={onSelectHandler}>
+            <option value="Mr.">Mr.</option>
+            <option value="Mrs.">Mrs.</option>
+        </select>
+    </div>
+    {/* <div className="first-set"> */}
     <div className="form-group Surname">
     <label>
         Surname:</label>
         <input type="text" 
-        name="Surname" placeholder="Surname" 
+        name="Surname" placeholder="Surname" className="input-text"
        onChange= {onChangeHandler} id="surname"/>
      <div class="error"></div>
     </div>
@@ -202,61 +223,57 @@ return (
     <label>
         Firstname:</label>
         <input type="text" placeholder="Firstname" 
-        name= "Firstname"
+        name= "Firstname" className="input-text"
        onChange= {onChangeHandler} id="firstname"/>
      <div class="error"></div>
     </div>
     <div className="form-group Other-names">
     <label>
         Other names: </label>
-        <input type="text" name="Othernames"  onChange= {onChangeHandler} placeholder="Othernames" id="othernames"/>
+        <input type="text" name="Othernames" className="input-text" onChange= {onChangeHandler} placeholder="Othernames" id="othernames"/>
         <div class="error"></div>
-    </div>
     </div>
     
     
     <div className="Gender form-group">
     <label htmlFor="gender" className="form-label"> Gender: </label>
-       <div className="form-control-pair">
-        <div>
-            <input type="radio" name="gender" value="male" onChange={onChangeHandler}/>
-            <label htmlFor="male">Male</label>
-        </div>
-        <div>
-            <input type="radio" name="gender" value="female" onChange={onChangeHandler}/>
-            <label htmlFor="female">Female</label>
-        </div>
-       </div>
+    <select name="gender" onClick={onSelectHandler}>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
     </div>
 
-    <div className="first-set">
+    {/* <div className="first-set"> */}
     <div className="form-group Region">
     <label>
         Region:</label>
-        <input type="text" name="Region" placeholder="Region" onChange={onChangeHandler}/>
+        <input type="text" name="Region" className="input-text" placeholder="Region" onChange={onChangeHandler}/>
     
     {/* value={region} */}
     </div>
     <div className="form-group Country">
     <label>
         Country: </label>
-        <input type="text" name="Country" placeholder="Country"  onChange={onChangeHandler}/>
-   
+        <select name="country" onChange={onChangeHandler}>
+            {
+                countries.map((country) => <option value={country.name}>{country.name}</option>)
+            
+            }
+        </select>
     {/* value={country} */}
     </div>
     <div className="form-group DOB">
     <label>
         Date of Birth:</label>
-        <input type="text" name="dateOfBirth" placeholder="dd/mm/yyyy"  onChange={onChangeHandler}/>
+        <input type="text" className="input-text" name="dateOfBirth" placeholder="dd/mm/yyyy"  onChange={onChangeHandler}/>
     
     {/* value={dob} */}
     </div>
-    </div>
-    <div className="first-set">
+    {/* <div className="first-set"> */}
     <div className="form-group Address">
     <label>  
         Address:</label>
-        <input type="text" name="Address" placeholder="Address" onChange={onChangeHandler}/>
+        <input type="text" className="input-text" name="Address" placeholder="Address" onChange={onChangeHandler}/>
   
     {/* value={address} */}
     </div>
@@ -268,31 +285,18 @@ return (
     </div>
     <div className="form-group Marital Status">
     <label htmlFor="maritalStatus" className="form-label marital-label">Marital Status: </label>
-       <div className="form-control-pair">
-        <div>
-            <input type="radio" name="maritalStatus" value="married" onChange={onChangeHandler}/>
-            <label htmlFor="married">Married</label>
-        </div>
-        <div>
-            <input type="radio" name="maritalStatus" value="single" onChange={onChangeHandler}/>
-            <label htmlFor="single">Single</label>
-        </div>
-       </div>
+        <select name="maritalStatus" onClick={onSelectHandler}>
+            <option value="married">Married</option>
+            <option value="single">Single</option>
+        </select>
     </div>
 
-    </div>
     <div className="form-group Occupation">
     <label htmlFor="occupation" className="form-label">Are you employed? </label>
-       <div className="form-control-pair" >
-        <div>
-            <input type="radio" name="employed" value="yes" onChange={onChangeHandler}/>
-            <label htmlFor="yes">Yes</label>
-        </div>
-        <div>
-            <input type="radio" name="employed" value="no" onChange={onChangeHandler}/>
-            <label htmlFor="no">No</label>
-        </div>
-       </div>
+    <select name="employed" onClick={onSelectHandler}>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
     </div>
     {formData.employed ==="yes" ?  <div className="form-group">
     <label htmlFor="no">Job:</label>
@@ -307,35 +311,37 @@ return (
      {formData.job ==="other" ?  <div className="form-group">
     <label> Job Other:</label>
         <input type="text" placeholder="Please specify" 
-        name= "jobOther"
+        name= "jobOther" className="input-text"
        onChange= {onChangeHandler} id="jobOther"/>
      </div> : null}
    
     <div className="form-group Disability">
     <label htmlFor="Disability" className="form-label">Are you disabled? </label>
-       <div className="form-control-pair">
-       <div>
-            <input type="radio" name="disbility" value="yes" onChange={onChangeHandler}/>
-            <label htmlFor="yes">Yes</label>
-        </div>
-        <div>
-            <input type="radio" name="disability" value="no" onChange={onChangeHandler}/>
-            <label htmlFor="no">No</label>
-        </div>
-       </div>
+        <select name="disability" onChange={onChangeHandler}>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+        </select>
     </div>
     <div className="form-group School-attended">
     <label>
         School attended: </label>
         <div className="school-d">
         {schoolValues.map((element, index) => (
-            <div className="form-inline row" key={index}>
-              <label>School Name</label>
+            <div className="form-inline-row" key={index}>
+                <div className="form-g-s">
+                <label>School Name</label>
               <input type="text" className="inline-input col-3" placeholder="eg. Achimota"  name="schoolname" value={element.schoolname || ""} onChange={e => handleChange(index, e)} />
+                </div>
+
+              <div className="form-g-s">
               <label>Start Date</label>
               <input type="text" name="startdate" className="inline-input col-3" placeholder="eg. 05/11/2018" value={element.startdate || ""} onChange={e => handleChange(index, e)} />
+              </div>
+              <div className="form-g-s">
               <label>End Date</label>
               <input type="text" name="enddate" className="inline-input col-3" placeholder="eg. 18/08/2022" value={element.enddate || ""} onChange={e => handleChange(index, e)} />
+              </div>
+              
               {
                 index ? 
                   <button type="button"  className="button remove" onClick={() => removeFormFields(index)}>Remove</button> 
@@ -363,7 +369,7 @@ return (
     </div>
 </form>
 
-<CSVLink {...csvLink}>Download Profile Data</CSVLink>
+<CSVLink {...csvLink}><button type="button">Download Profile Data</button></CSVLink>
 </div>
    
 )
