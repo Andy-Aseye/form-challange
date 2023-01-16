@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CSVLink} from 'react-csv';
+import LogoutButton from './logoutButton';
 
 import './style.css';
 function Form() {
@@ -115,8 +116,8 @@ const arrData = Object.entries(formData);
 
     }
 
-    const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+//     const current = new Date();
+//   const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
 
     // This is the CSV file header for the state form 
 
@@ -198,13 +199,16 @@ const validateInputs = () => {
 return (
 
 <div>
+    <div className="logout-button">
+    <LogoutButton/>
+    </div> 
 <form>
     <div className="header-div">
     <h1 className='header-name'>Data Form</h1>
     </div>
    
 <div className="form-group Title">
-    <label htmlFor="title" className="form-label">Title</label>
+    <label htmlFor="title" className="form-label">Title:</label>
         <select name="Title" onClick={onSelectHandler}>
             <option value="Mr.">Mr.</option>
             <option value="Mrs.">Mrs.</option>
@@ -365,7 +369,7 @@ return (
     
     </div>
     <div className="footer">
-        <button type="button" onClick={() => console.log(formData)} >Submit</button>
+        <button type="button" onClick={validateInputs} >Submit</button>
     </div>
 </form>
 
