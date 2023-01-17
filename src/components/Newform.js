@@ -253,7 +253,7 @@ return (
     <div className="form-group Country">
     <label>
         Country: </label>
-        <select name="country" onChange={onChangeHandler}>
+        <select name="country" onChange={onSelectHandler}>
             {
                 countries.map((country) => <option value={country.name}>{country.name}</option>)
             
@@ -316,7 +316,7 @@ return (
    
     <div className="form-group Disability">
     <label htmlFor="Disability" className="form-label">Are you disabled? </label>
-        <select name="disability" onChange={onChangeHandler}>
+        <select name="disability" onChange={onSelectHandler}>
             <option value="No">No</option>
             <option value="Yes">Yes</option>
         </select>
