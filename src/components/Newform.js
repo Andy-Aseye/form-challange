@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CSVLink} from 'react-csv';
 
-
 import './style.css';
 function Form() {
 
@@ -142,7 +141,6 @@ const csvLink = {
     headers: headers,
     filename: formData.Firstname+ ' on ' + new Date(),
     data: arrData,
-
 }
 
 // These functions validate the form, primarily targeting the firstname and surname form inputs
