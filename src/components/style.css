@@ -167,6 +167,6 @@ form {
 .logout-button{
     display: flex;
     float: right;
-    /* margin-top: -7rem; */
+    margin-top: -7rem;
     margin-right: 2rem;
 }

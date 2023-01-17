@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CSVLink} from 'react-csv';
 
 import './style.css';
+import LogoutButton from './logoutButton';
 function Form() {
 
 // This fetches data from the country REST api that will be mapped in the country select input
@@ -197,6 +198,9 @@ const validateInputs = () => {
 return (
 
 <div>
+    <div className='logout-button'>
+        <LogoutButton />
+    </div>
 <form>
     <div className="header-div">
     <h1 className='header-name'>Data Form</h1>
