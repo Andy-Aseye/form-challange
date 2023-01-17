@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CSVLink} from 'react-csv';
-import LogoutButton from './logoutButton';
+
 
 import './style.css';
 function Form() {
@@ -199,9 +199,6 @@ const validateInputs = () => {
 return (
 
 <div>
-    <div className="logout-button">
-    <LogoutButton/>
-    </div> 
 <form>
     <div className="header-div">
     <h1 className='header-name'>Data Form</h1>
